@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "../../slices/usersApiSlice";
-import { setCredentials } from "../../slices/authSlice";
-import * as yup from "yup";
-import { Formik } from "formik";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from 'slices/usersApiSlice';
+import { setCredentials } from 'slices/globalSlice';
+import * as yup from 'yup';
+import { Formik } from 'formik';
 import {
   Box,
   Button,
@@ -12,21 +12,21 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
-} from "@mui/material";
+} from '@mui/material';
 
 const loginSchema = yup.object().shape({
-  Pseudo: yup.string().required("veuillez rentrer votre pseudo"),
-  Password: yup.string().required("veuillez rentrer votre mot de passe"),
+  Pseudo: yup.string().required('veuillez rentrer votre pseudo'),
+  Password: yup.string().required('veuillez rentrer votre mot de passe'),
 });
 
 const initialValuesLogin = {
-  Pseudo: "",
-  Password: "",
+  Pseudo: '',
+  Password: '',
 };
 
 const Form = () => {
   const { palette } = useTheme();
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const isNonMobile = useMediaQuery('(min-width:600px)');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ const Form = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/dashboard");
+      navigate('/dashboard');
     }
   }, [navigate, userInfo]);
 
@@ -45,7 +45,7 @@ const Form = () => {
     try {
       const res = await loginMutation(values).unwrap();
       dispatch(setCredentials({ ...res }));
-      navigate("/dashboard");
+      navigate('/dashboard');
       setSubmitting(false);
     } catch (err) {
       console.log(err.data.message || err.error);
@@ -68,33 +68,33 @@ const Form = () => {
       }) => (
         <form onSubmit={handleSubmit}>
           <Box
-            display="grid"
-            gap="30px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            display='grid'
+            gap='30px'
+            gridTemplateColumns='repeat(4, minmax(0, 1fr))'
             sx={{
-              "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+              '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' },
             }}
           >
             <TextField
-              label="Pseudo"
+              label='Pseudo'
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.Pseudo}
-              name="Pseudo"
+              name='Pseudo'
               error={Boolean(touched.Pseudo) && Boolean(errors.Pseudo)}
               helperText={touched.Pseudo && errors.Pseudo}
-              sx={{ gridColumn: "span 4" }}
+              sx={{ gridColumn: 'span 4' }}
             />
             <TextField
-              label="Mot de Passe"
-              type="password"
+              label='Mot de Passe'
+              type='password'
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.Password}
-              name="Password"
+              name='Password'
               error={Boolean(touched.Password) && Boolean(errors.Password)}
               helperText={touched.Password && errors.Password}
-              sx={{ gridColumn: "span 4" }}
+              sx={{ gridColumn: 'span 4' }}
             />
           </Box>
 
@@ -102,23 +102,23 @@ const Form = () => {
           <Box>
             <Button
               fullWidth
-              type="submit"
+              type='submit'
               sx={{
-                m: "2rem 0",
-                p: "1rem",
-                backgroundColor: "#3FB500",
+                m: '2rem 0',
+                p: '1rem',
+                backgroundColor: '#3FB500',
                 color: palette.background.alt,
-                "&:hover": { color: "#3FB500" },
+                '&:hover': { color: '#3FB500' },
               }}
             >
               CONNEXION
             </Button>
             <Typography
               sx={{
-                textDecoration: "underline",
+                textDecoration: 'underline',
                 color: palette.primary.main,
-                "&:hover": {
-                  cursor: "pointer",
+                '&:hover': {
+                  cursor: 'pointer',
                   color: palette.primary.light,
                 },
               }}

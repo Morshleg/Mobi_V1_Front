@@ -1,8 +1,8 @@
-import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useLogoutMutation } from "../slices/usersApiSlice";
-import { logout } from "../slices/authSlice";
+import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from 'slices/usersApiSlice';
+import { logout } from 'slices/globalSlice';
 
 const DashboardScreen = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const DashboardScreen = () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
-      navigate("/");
+      navigate('/');
     } catch (err) {
       console.error(err);
     }

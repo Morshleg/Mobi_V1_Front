@@ -1,35 +1,38 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import MobiOneLogo from "../../assets/MobiOneLogo.png";
-import Form from "./Form.jsx";
+import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
+import LogoLight from 'assets/MobiOneLogo.png';
+import LogoDark from 'assets/MobiOneLogoDark.png';
+import Form from './Form.jsx';
 
 const LoginScreen = () => {
   const theme = useTheme();
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  const isLightMode = theme.palette.mode === 'light';
+  const logo = isLightMode ? LogoLight : LogoDark;
+  const isNonMobileScreens = useMediaQuery('(min-width: 1000px)');
   return (
     <Box>
       <Box
-        width="100%"
+        width='100%'
         backgroundColor={theme.palette.background.alt}
-        p="1rem 6%"
-        textAlign="center"
+        p='1rem 6%'
+        textAlign='center'
       >
-        <Typography fontWeight="bold" fontSize="32px" color="primary">
+        <Typography>
           <img
-            src={MobiOneLogo}
-            alt="MobiOne"
-            style={{ width: "20%", height: "auto" }}
+            src={logo}
+            alt='MobiOne'
+            style={{ width: '20%', height: 'auto' }}
           />
         </Typography>
       </Box>
 
       <Box
-        width={isNonMobileScreens ? "50%" : "93%"}
-        p="2rem"
-        m="2rem auto"
-        borderRadius="1.5rem"
+        width={isNonMobileScreens ? '50%' : '93%'}
+        p='2rem'
+        m='2rem auto'
+        borderRadius='1.5rem'
         backgroundColor={theme.palette.background.alt}
       >
-        <Typography sx={{ mb: "1.5rem" }}></Typography>
+        <Typography sx={{ mb: '1.5rem' }}></Typography>
         <Form />
       </Box>
     </Box>

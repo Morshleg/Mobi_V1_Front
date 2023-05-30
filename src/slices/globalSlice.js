@@ -1,20 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  mode: "dark",
-  userId: "63701cc1f03239b7f700000e",
+  userInfo: localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo'))
+    : null,
+  mode: 'dark',
 };
 
-export const globalSlice = createSlice({
-  name: "global",
+const globalSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
+    setCredentials: (state, action) => {
+      state.userInfo = action.payload;
+      localStorage.setItem('userInfo', JSON.stringify(action.payload));
+    },
+    logout: (state) => {
+      state.userInfo = null;
+      localStorage.removeItem('userInfo');
+    },
     setMode: (state) => {
-      state.mode = state.mode === "light" ? "dark" : "light";
+      state.mode = state.mode === 'light' ? 'dark' : 'light';
     },
   },
 });
 
-export const { setMode } = globalSlice.actions;
+export const { setCredentials, setMode, logout } = globalSlice.actions;
 
 export default globalSlice.reducer;
