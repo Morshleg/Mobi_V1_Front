@@ -2,21 +2,19 @@ import React, { useState } from 'react';
 import {
   LightModeOutlined,
   DarkModeOutlined,
-  Menu as MenuIcon,
-  Search,
   ArrowDropDownOutlined,
 } from '@mui/icons-material';
 import FlexBetween from 'components/FlexBetween';
 import { useDispatch } from 'react-redux';
 import { setMode } from 'slices/globalSlice';
-import profileImage from 'assets/CMaurice.jpg';
+
 import {
   AppBar,
   Button,
   Box,
   Typography,
   IconButton,
-  InputBase,
+  
   Toolbar,
   Menu,
   MenuItem,
@@ -25,11 +23,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from 'slices/usersApiSlice';
 import { logout } from 'slices/globalSlice';
+import { useSelector } from 'react-redux';
 
-const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
+const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-
+  const user = useSelector((state) => state.auth.userInfo);
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
@@ -59,21 +58,9 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* LEFT SIDE */}
+
         <FlexBetween>
-          <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            <MenuIcon />
-          </IconButton>
-          <FlexBetween
-            backgroundColor={theme.palette.background.alt}
-            borderRadius='9px'
-            gap='3rem'
-            p='0.1rem 1.5rem'
-          >
-            <InputBase placeholder='Search...' />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
+          {/* Rajouter par emple un texte deroulant avec des news locales ici */}         
         </FlexBetween>
 
         {/* RIGHT SIDE */}
@@ -97,15 +84,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 gap: '1rem',
               }}
             >
-              <Box
-                component='img'
-                alt='profile'
-                src={profileImage}
-                height='32px'
-                width='32px'
-                borderRadius='50%'
-                sx={{ objectFit: 'cover' }}
-              />
+             
               <Box textAlign='left'>
                 <Typography
                   fontWeight='bold'

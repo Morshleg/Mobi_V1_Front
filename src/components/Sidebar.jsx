@@ -18,7 +18,7 @@ import {
   HomeOutlined,
   InventoryOutlined,
   ConstructionOutlined,
-  ReceiptOutlined,
+ 
   AdminPanelSettingsOutlined,
 } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import FlexBetween from './FlexBetween';
 import LogoLight from 'assets/MobiOneLogo.png';
 import LogoDark from 'assets/MobiOneLogoDark.png';
-import profileImage from 'assets/CMaurice.jpg';
+import { useSelector } from 'react-redux';
+
+ 
 
 const navItems = [
   {
@@ -42,26 +44,21 @@ const navItems = [
     icon: <InventoryOutlined />,
   },
   {
-    text: 'Reparation',
+    text: 'Réparations',
     icon: <ConstructionOutlined />,
   },
   {
-    text: 'Transactions',
-    icon: <ReceiptOutlined />,
-  },
-
-  {
-    text: 'Management',
+    text: 'Administration',
     icon: null,
   },
   {
-    text: 'Admin',
+    text: 'Utilisateurs',
     icon: <AdminPanelSettingsOutlined />,
   },
 ];
 
 const Sidebar = ({
-  user,
+  
   drawerWidth,
   isSidebarOpen,
   setIsSidebarOpen,
@@ -73,7 +70,11 @@ const Sidebar = ({
   const theme = useTheme();
   const isLightMode = theme.palette.mode === 'light';
   const logo = isLightMode ? LogoLight : LogoDark;
-
+  const user = useSelector((state) => state.auth.userInfo);
+  console.log(user.Role)
+  const filteredNavItems = navItems.filter(
+    ({ text }) => (text !== 'Administration' && text !== 'Utilisateurs') || user.Role === 'Empereur'
+  );
   useEffect(() => {
     setActive(pathname.substring(1));
   }, [pathname]);
@@ -115,7 +116,7 @@ const Sidebar = ({
               </FlexBetween>
             </Box>
             <List>
-              {navItems.map(({ text, icon }) => {
+              {filteredNavItems.map(({ text, icon }) => {
                 if (!icon) {
                   return (
                     <Typography key={text} sx={{ m: '2.25rem 0 1rem 3rem' }}>
@@ -168,15 +169,7 @@ const Sidebar = ({
           <Box position='absolute' bottom='2rem'>
             <Divider />
             <FlexBetween textTransform='none' gap='1rem' m='1.5rem 2rem 0 3rem'>
-              <Box
-                component='img'
-                alt='profile'
-                src={profileImage}
-                height='40px'
-                width='40px'
-                borderRadius='50%'
-                sx={{ objectFit: 'cover' }}
-              />
+              
               <Box textAlign='left'>
                 <Typography
                   fontWeight='bold'

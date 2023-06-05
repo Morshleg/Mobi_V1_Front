@@ -10,11 +10,13 @@ export const productsApiSlice = createApi({
     getAllProducts: build.query({
       query: () => `${PRODUCTS_URL}`,
       method: 'GET',
+      credentials: 'include',
     }),
 
     getProduct: build.query({
       query: (id) => `${PRODUCTS_URL}/${id}`,
       method: 'GET',
+      credentials: 'include',
     }),
 
     createProduct: build.mutation({
@@ -22,14 +24,17 @@ export const productsApiSlice = createApi({
         url: `${PRODUCTS_URL}/create`,
         method: 'POST',
         body: data,
+        credentials: 'include',
       }),
       invalidatesTags: ['Product'],
     }),
 
     updateProduct: build.mutation({
-      query: (id) => ({
+      query: ({ id, data }) => ({
         url: `${PRODUCTS_URL}/${id}`,
         method: 'PUT',
+        body: data,
+        credentials: 'include',
       }),
       providesTags: (id) => [{ type: 'Product', id }],
     }),
@@ -38,6 +43,7 @@ export const productsApiSlice = createApi({
       query: (id) => ({
         url: `${PRODUCTS_URL}/${id}`,
         method: 'DELETE',
+        credentials: 'include',
       }),
       providesTags: (id) => [{ type: 'Product', id }],
     }),
