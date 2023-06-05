@@ -18,7 +18,6 @@ import {
   HomeOutlined,
   InventoryOutlined,
   ConstructionOutlined,
- 
   AdminPanelSettingsOutlined,
 } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
@@ -27,8 +26,6 @@ import FlexBetween from './FlexBetween';
 import LogoLight from 'assets/MobiOneLogo.png';
 import LogoDark from 'assets/MobiOneLogoDark.png';
 import { useSelector } from 'react-redux';
-
- 
 
 const navItems = [
   {
@@ -58,7 +55,6 @@ const navItems = [
 ];
 
 const Sidebar = ({
-  
   drawerWidth,
   isSidebarOpen,
   setIsSidebarOpen,
@@ -71,9 +67,10 @@ const Sidebar = ({
   const isLightMode = theme.palette.mode === 'light';
   const logo = isLightMode ? LogoLight : LogoDark;
   const user = useSelector((state) => state.auth.userInfo);
-  console.log(user.Role)
   const filteredNavItems = navItems.filter(
-    ({ text }) => (text !== 'Administration' && text !== 'Utilisateurs') || user.Role === 'Empereur'
+    ({ text }) =>
+      (text !== 'Administration' && text !== 'Utilisateurs') ||
+      user.Role === 'Empereur'
   );
   useEffect(() => {
     setActive(pathname.substring(1));
@@ -169,7 +166,6 @@ const Sidebar = ({
           <Box position='absolute' bottom='2rem'>
             <Divider />
             <FlexBetween textTransform='none' gap='1rem' m='1.5rem 2rem 0 3rem'>
-              
               <Box textAlign='left'>
                 <Typography
                   fontWeight='bold'

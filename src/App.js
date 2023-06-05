@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { themeSettings } from './theme';
 import LoginScreen from 'screens/loginScreen';
-import PrivateRoute from 'components/PrivateRoute.jsx';
+import PrivateRoute from 'components/PrivateRoute';
 import Layout from 'screens/layout';
 import DashboardScreen from 'screens/dashboardScreen';
 import Products from 'screens/products';

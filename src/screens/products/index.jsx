@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Alert,
   Box,
+  Button,
   useTheme,
   Modal,
   Select,
@@ -18,10 +19,11 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { useGetAllProductsQuery } from 'slices/productsApiSlice';
 // import { useUpdateProductMutation } from 'slices/productsApiSlice';
-// import { useDeleteProductMutation } from 'slices/productsApiSlice';
+import { useDeleteProductMutation } from 'slices/productsApiSlice';
 import axios from 'axios';
 import ConfirmationModal from 'components/ConfirmationModal';
 import { useSnackbar } from 'components/Snackbar';
+import Cookies from 'js-cookie';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:5000';
@@ -32,6 +34,8 @@ const Products = ({
   uniqueValues,
   onFilterChange,
 }) => {
+  const isCookiePresent = Cookies.get('jwt');
+  console.log(isCookiePresent);
   const theme = useTheme();
 
   const [page, setPage] = useState(0);
@@ -60,7 +64,7 @@ const Products = ({
   const [quantities, setQuantities] = useState({});
   const currentPage = page;
 
-  const { data, isLoading } = useGetAllProductsQuery({
+  const { data, isLoading, refetch } = useGetAllProductsQuery({
     page,
     sort: JSON.stringify(sort),
     search: searchInput,
@@ -124,13 +128,15 @@ const Products = ({
 
   const handleCloseModal = () => {
     setOpenModal(false);
+    refetch();
   };
   /* --------------------- */
 
   /* MODAL DE CONFIRMATION DE SUPRESSION */
 
   /*--------------QUANTITY UPDATE-----------------------*/
-  const handleConfirm = (product) => {
+
+  const handleQuantityUpdate = (product) => {
     // Récupérer l'identifiant du produit et la quantité
     const { _id } = product;
     const quantity = quantities[_id];
@@ -180,35 +186,18 @@ const Products = ({
     setShowConfirmationModal(true);
   };
 
-  const handleDelete = async (product) => {
-    setProductToDelete(product);
-    setShowConfirmationModal(true);
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const handleDelete = async () => {
     try {
-      const productId = product._id;
-      const response = await fetch(
-        `http://localhost:5000/api/products/${productId}`,
-        {
-          method: 'DELETE',
-          credentials: 'include',
-        }
-      );
-
-      const deletedProduct = await response.json();
-
-      if (deletedProduct.message === 'Product deleted successfully.') {
-        console.log('Produit supprimé avec succès !');
-        filterDeletedProduct(productId); // Filtrer le produit supprimé du tableau
-        showSnackbar('Produit supprimé avec succès', 'success');
-      } else {
-        console.error(
-          'Erreur lors de la suppression du produit :',
-          deletedProduct.message
-        ); // Gérez les erreurs de suppression
-        showSnackbar('Erreur lors de la suppression du produit', 'error');
-      }
+      const productId = productToDelete._id;
+      await deleteProduct(productId).unwrap();
+      console.log('Produit supprimé avec succès !');
+      filterDeletedProduct(productId); // Filtrer le produit supprimé du tableau
+      showSnackbar('Produit supprimé avec succès', 'success');
     } catch (error) {
       console.error('Erreur lors de la suppression du produit :', error);
-      // Gérez les erreurs de suppression
+      showSnackbar('Erreur lors de la suppression du produit', 'error');
     } finally {
       setShowConfirmationModal(false); // Fermer la modal de confirmation
       setProductToDelete(null);
@@ -288,21 +277,30 @@ const Products = ({
       headerName: 'Quantité',
       flex: 1,
       renderCell: (params) => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <input
-            type='text'
-            value={quantities[params.row._id] || ''}
-            style={{ width: '25%', margin: '0 auto' }}
-            pattern='[0-9]*'
-            onChange={(e) => handleQuantityChange(params.row._id, e)}
-          />
-          <button
-            style={{ marginLeft: '10px' }}
-            onClick={() => handleConfirm(params.row)}
-          >
-            Confirmer
-          </button>
-        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleQuantityUpdate(params.row);
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <input
+              type='text'
+              value={quantities[params.row._id] || ''}
+              style={{ width: '25%', margin: '0 auto' }}
+              pattern='[0-9]*'
+              onChange={(e) => handleQuantityChange(params.row._id, e)}
+            />
+            <Button
+              style={{ marginLeft: '10px' }}
+              variant='outlined'
+              color='secondary'
+              type='submit'
+            >
+              Confirmer
+            </Button>
+          </div>
+        </form>
       ),
     },
 
