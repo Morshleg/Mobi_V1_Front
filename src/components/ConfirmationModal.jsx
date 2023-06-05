@@ -1,7 +1,13 @@
 import React from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
 
-const ConfirmationModal = ({ open, onClose, onConfirm, productToDelete }) => {
+const ConfirmationModal = ({
+  open,
+  onClose,
+  onConfirm,
+  productToDelete,
+  productName,
+}) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -20,7 +26,7 @@ const ConfirmationModal = ({ open, onClose, onConfirm, productToDelete }) => {
           Confirmation de suppression
         </Typography>
         <Typography variant='body1'>
-          Êtes-vous sûr de vouloir supprimer ce produit ?
+          Êtes-vous sûr de vouloir supprimer {productName} ?
         </Typography>
         <Box display='flex' justifyContent='flex-end' marginTop='1rem'>
           <Button variant='outlined' color='secondary' onClick={onClose}>

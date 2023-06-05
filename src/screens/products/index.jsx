@@ -195,6 +195,7 @@ const Products = ({
       console.log('Produit supprimé avec succès !');
       filterDeletedProduct(productId); // Filtrer le produit supprimé du tableau
       showSnackbar('Produit supprimé avec succès', 'success');
+      refetch();
     } catch (error) {
       console.error('Erreur lors de la suppression du produit :', error);
       showSnackbar('Erreur lors de la suppression du produit', 'error');
@@ -390,6 +391,9 @@ const Products = ({
           onClose={() => setShowConfirmationModal(false)}
           onConfirm={handleDelete}
           productToDelete={productToDelete}
+          productName={
+            productToDelete ? productToDelete.Designation : 'ce produit'
+          }
         />
 
         <Snackbar
