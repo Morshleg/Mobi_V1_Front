@@ -15,7 +15,7 @@ import DataGridCustomToolbarProduct from 'components/DataGridCustomToolbarProduc
 import ProductRegister from './productRegister';
 import Header from 'components/Header';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { useGetAllProductsQuery } from 'slices/productsApiSlice';
 // import { useUpdateProductMutation } from 'slices/productsApiSlice';
 // import { useDeleteProductMutation } from 'slices/productsApiSlice';
@@ -311,8 +311,9 @@ const Products = ({
       headerName: 'Action',
       flex: 1,
       renderCell: (params) => (
-        <DeleteIcon
+        <DeleteForeverOutlinedIcon
           color='error'
+          fontSize='large'
           onClick={() => handleDeleteConfirmation(params.row)}
           style={{ cursor: 'pointer' }}
         />
