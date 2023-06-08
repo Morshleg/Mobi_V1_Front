@@ -13,6 +13,9 @@ import * as yup from 'yup';
 import { useSnackbar } from 'components/Snackbar';
 
 const registerSchema = yup.object().shape({
+  'Code article': yup
+    .number()
+    .required('Le code article du produit est requise'),
   Designation: yup.string().required('Le designation du produit est requise'),
   Taille: yup.number(),
   Couleur: yup.string(),
@@ -24,21 +27,19 @@ const registerSchema = yup.object().shape({
     .oneOf(['neuf', 'occasion'], "Le produit doit etre ou 'neuf' ou 'occasion'")
     .default('occasion'),
   Garantie: yup.string(),
-  PointDeVente: yup
+  'Point de vente': yup
     .string()
     .oneOf(
-      ['St-Pierre', 'St-Paul'],
+      ['MOBIONE ST-PIERRE', 'MOBIONE ST-PAUL'],
       "Le point de vente doit etre 'St-Pierre' ou 'St-Paul'"
     )
-    .default('St-Paul'),
+    .default('MOBIONE ST-PAUL'),
   Stock: yup.number(),
   Quantite: yup.string(),
-  VenteHT: yup.string(),
-  TauxTVA: yup.string(),
-  VenteTTC: yup.string(),
 });
 
 const initialValuesRegister = {
+  CodeArticle: '',
   Designation: '',
   Taille: '',
   Couleur: '',
@@ -46,12 +47,9 @@ const initialValuesRegister = {
   Type: '',
   NeufOccasion: 'occasion',
   Garantie: '',
-  PointDeVente: 'St-Paul',
+  'Point de vente': 'MOBIONE ST-PAUL',
   Stock: '',
   Quantite: '',
-  VenteHT: '',
-  TauxTVA: '',
-  VenteTTC: '',
 };
 
 const ProductRegister = () => {
@@ -104,6 +102,21 @@ const ProductRegister = () => {
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  label='Code article'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values['Code article']}
+                  name='Code article'
+                  error={
+                    Boolean(touched['Code article']) &&
+                    Boolean(errors['Code article'])
+                  }
+                  helperText={touched['Code article'] && errors['Code article']}
+                  sx={{ marginBottom: 2 }}
+                />
+              </Grid>
               <Grid item xs={6}>
                 <TextField
                   label='Designation'
@@ -199,15 +212,22 @@ const ProductRegister = () => {
                   select
                   label='Point de vente'
                   name='Point de vente'
-                  value={values.PointDeVente}
+                  value={values['Point de vente']}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched.PointDeVente && Boolean(errors.PointDeVente)}
-                  helperText={touched.PointDeVente && errors.PointDeVente}
+                  error={
+                    touched['Point de vente'] &&
+                    Boolean(errors['Point de vente'])
+                  }
+                  helperText={
+                    touched['Point de vente'] && errors['Point de vente']
+                  }
                   sx={{ marginBottom: 2 }}
                 >
-                  <MenuItem value='St-Pierre'>St-Pierre</MenuItem>
-                  <MenuItem value='St-Paul'>St-Paul</MenuItem>
+                  <MenuItem value='MOBIONE ST-PIERRE'>
+                    MOBIONE ST-PIERRE
+                  </MenuItem>
+                  <MenuItem value='MOBIONE ST-PAUL'>MOBIONE ST-PAUL</MenuItem>
                 </TextField>
               </Grid>
               <Grid item xs={6}>
@@ -231,42 +251,6 @@ const ProductRegister = () => {
                   name='Quantite'
                   error={Boolean(touched.Quantite) && Boolean(errors.Quantite)}
                   helperText={touched.Quantite && errors.Quantite}
-                  sx={{ marginBottom: 2 }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label='VenteHT'
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.VenteHT}
-                  name='VenteHT'
-                  error={Boolean(touched.VenteHT) && Boolean(errors.VenteHT)}
-                  helperText={touched.VenteHT && errors.VenteHT}
-                  sx={{ marginBottom: 2 }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label='TauxTVA'
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.TauxTVA}
-                  name='TauxTVA'
-                  error={Boolean(touched.TauxTVA) && Boolean(errors.TauxTVA)}
-                  helperText={touched.TauxTVA && errors.TauxTVA}
-                  sx={{ marginBottom: 2 }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label='VenteTTC'
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.VenteTTC}
-                  name='VenteTTC'
-                  error={Boolean(touched.VenteTTC) && Boolean(errors.VenteTTC)}
-                  helperText={touched.VenteTTC && errors.VenteTTC}
                   sx={{ marginBottom: 2 }}
                 />
               </Grid>
