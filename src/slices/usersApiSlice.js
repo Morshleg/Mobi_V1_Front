@@ -50,8 +50,12 @@ export const userApiSlice = createApi({
       method: 'GET',
     }),
 
-    getUserById: build.query({
-      query: (id) => `${USERS_URL}/${id}`,
+    getUserById: build.mutation({
+      query: (id) => ({
+        url: `/api/users/${id}`,
+        method: 'GET',
+        providesTags: ['getUserById'],
+      }),
     }),
 
     updateUser: build.mutation({
@@ -79,7 +83,7 @@ export const {
   useUpdateUserProfileMutation,
   useGetUserProfileQuery,
   useGetAllUsersQuery,
-  useGetUserByIdQuery,
+  useGetUserByIdMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
 } = userApiSlice;

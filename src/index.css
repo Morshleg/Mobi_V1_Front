@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
 html,
 body,
@@ -6,5 +6,77 @@ body,
 .app {
   height: 100%;
   width: 100%;
-  font-family: "Rubik", sans-serif;
+  font-family: "Inter", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #7a7f9d;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #21295c;
+}
+
+/* Handle on Hover */
+::-webkit-scrollbar-track:hover {
+  background: #21295c;
+}
+
+
+
+@keyframes blink-animation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* ------MODAL CREATE UPDATE ADMIN/index.js------- */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.fade-out {
+  animation: fadeOut 5s forwards;
+}
+@keyframes UpdatefadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.updateFade-out {
+  animation: UpdatefadeOut 5s forwards;
+}
+
+/* ----- PRODUCTS/index.js ------ */
+.flash-warning {
+  animation: blink-animation 1s infinite;
+  color: rgb(255, 153, 0);
+  font-weight: bold;
+}
+
+.link {
+  color: white;
+  text-decoration: underline;
+}
+
+.link:visited {
+  color: white;
 }

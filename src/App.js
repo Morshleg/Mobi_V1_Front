@@ -10,6 +10,8 @@ import PrivateRoute from 'components/PrivateRoute';
 import Layout from 'screens/layout';
 import DashboardScreen from 'screens/dashboardScreen';
 import Products from 'screens/products';
+import Admin from 'screens/admin';
+// import Repairs from 'screens/repairs';
 
 const App = () => {
   const mode = useSelector((state) => state.auth.mode);
@@ -26,6 +28,8 @@ const App = () => {
               <Route element={<Layout />}>
                 <Route path='/dashboard' element={<DashboardScreen />} />
                 <Route path='/stock' element={<Products />} />
+                {/* <Route path='/réparations' element={<Repairs />} /> */}
+                <Route path='/utilisateurs' element={<Admin />} />
               </Route>
             </Route>
           </Routes>
