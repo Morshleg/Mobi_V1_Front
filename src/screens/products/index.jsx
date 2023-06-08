@@ -23,7 +23,6 @@ import { useDeleteProductMutation } from 'slices/productsApiSlice';
 import axios from 'axios';
 import ConfirmationModal from 'components/ConfirmationModal';
 import { useSnackbar } from 'components/Snackbar';
-import Cookies from 'js-cookie';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:5000';
@@ -34,8 +33,6 @@ const Products = ({
   uniqueValues,
   onFilterChange,
 }) => {
-  const isCookiePresent = Cookies.get('jwt');
-  console.log(isCookiePresent);
   const theme = useTheme();
 
   const [page, setPage] = useState(0);

@@ -41,7 +41,7 @@ const Form = () => {
     }
   }, [navigate, userInfo]);
 
-  const handleFormSubmit = async (values, { setSubmitting }) => {
+  const handleFormSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
       const res = await loginMutation(values).unwrap();
       dispatch(setCredentials({ ...res }));
@@ -49,6 +49,14 @@ const Form = () => {
       setSubmitting(false);
     } catch (err) {
       console.log(err.data.message || err.error);
+
+      if (err.data.message === 'Invalid pseudo') {
+        setFieldError('Pseudo', 'Pseudo invalide');
+      }
+
+      if (err.data.message === 'Invalid password') {
+        setFieldError('Password', 'Mot de passe invalide');
+      }
     }
   };
 
@@ -85,6 +93,7 @@ const Form = () => {
               helperText={touched.Pseudo && errors.Pseudo}
               sx={{ gridColumn: 'span 4' }}
             />
+
             <TextField
               label='Mot de Passe'
               type='password'

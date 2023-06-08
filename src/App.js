@@ -22,8 +22,8 @@ const App = () => {
           <CssBaseline />
           <Routes>
             <Route path='/' element={<LoginScreen />} />
-            <Route path='' element={<PrivateRoute />}>
-              <Route path='' element={<Layout />}>
+            <Route element={<PrivateRoute />}>
+              <Route element={<Layout />}>
                 <Route path='/dashboard' element={<DashboardScreen />} />
                 <Route path='/stock' element={<Products />} />
               </Route>
