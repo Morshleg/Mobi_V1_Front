@@ -270,7 +270,7 @@ const ProductRegister = () => {
         <Alert
           onClose={handleSnackbarClose}
           severity={snackbarSeverity}
-          sx={{ width: '90%' }}
+          sx={{ width: '80%' }}
         >
           {snackbarMessage}
         </Alert>

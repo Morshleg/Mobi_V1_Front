@@ -314,9 +314,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Prénom
@@ -331,9 +331,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Nom
@@ -348,9 +348,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Pseudo
@@ -366,9 +366,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Email
@@ -388,9 +388,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Rôle
@@ -422,9 +422,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Prénom
@@ -434,9 +434,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Nom
@@ -446,9 +446,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Pseudo
@@ -458,9 +458,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Email
@@ -470,9 +470,9 @@ const Admin = () => {
                   <p>
                     <span
                       style={{
-                        textDecoration: 'underline',
+                        // textDecoration: 'underline',
                         fontWeight: 'bold',
-                        color: 'gray',
+                        color: '#ffe3a3',
                       }}
                     >
                       Rôle
@@ -480,7 +480,7 @@ const Admin = () => {
                     : <span>{updateSuccess ? '' : selectedUser.Role}</span>
                   </p>
                   <EditIcon
-                    color='primary'
+                    color='warning'
                     onClick={handleEditField}
                     style={{ cursor: 'pointer', marginLeft: '0.5rem' }}
                   />

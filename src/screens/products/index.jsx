@@ -21,7 +21,7 @@ import { useGetAllProductsQuery } from 'slices/productsApiSlice';
 // import { useUpdateProductMutation } from 'slices/productsApiSlice';
 import { useDeleteProductMutation } from 'slices/productsApiSlice';
 import axios from 'axios';
-import ConfirmationModal from 'components/ConfirmationModal';
+import ConfirmationModal from 'components/ModalProductDelete';
 import { useSnackbar } from 'components/Snackbar';
 
 axios.defaults.withCredentials = true;
