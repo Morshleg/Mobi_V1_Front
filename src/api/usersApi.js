@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const USERS_URL = '/api/users';
 
-export const userApiSlice = createApi({
+export const userApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '' }),
   reducerPath: 'userApiSlice',
   tagTypes: ['User'],
@@ -86,4 +86,4 @@ export const {
   useGetUserByIdMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
-} = userApiSlice;
+} = userApi;

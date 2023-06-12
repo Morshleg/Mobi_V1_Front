@@ -2,12 +2,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const REPAIRS_URL = '/api/repairs';
 
-export const repairsApiSlice = createApi({
+export const repairsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '' }),
   reducerPath: 'repairApi',
   tagTypes: ['Repair'],
   endpoints: (build) => ({
-    
     getAllRepairs: build.query({
       query: () => `${REPAIRS_URL}`,
       method: 'GET',
@@ -16,11 +15,9 @@ export const repairsApiSlice = createApi({
     getRepair: build.mutation({
       query: (id) => ({
         url: `${REPAIRS_URL}/${id}`,
-        method: 'GET'
+        method: 'GET',
       }),
     }),
-
-    
 
     createRepair: build.mutation({
       query: (data) => ({
@@ -35,7 +32,6 @@ export const repairsApiSlice = createApi({
         url: `${REPAIRS_URL}/${id}`,
         method: 'PUT',
       }),
-      
     }),
 
     deleteRepair: build.mutation({
@@ -43,7 +39,6 @@ export const repairsApiSlice = createApi({
         url: `${REPAIRS_URL}/${id}`,
         method: 'DELETE',
       }),
-      
     }),
   }),
 });
@@ -54,4 +49,4 @@ export const {
   useCreateRepairMutation,
   useUpdateRepairMutation,
   useDeleteRepairMutation,
-} = repairsApiSlice;
+} = repairsApi;
