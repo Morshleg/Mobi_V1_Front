@@ -62,7 +62,7 @@ const Admin = () => {
   });
 
   const [paginationModel, setPaginationModel] = useState({
-    pageSize: 5,
+    pageSize: 6,
     page: 0,
   });
   const [getUserById] = useGetUserByIdMutation();
@@ -678,6 +678,7 @@ const Admin = () => {
                 getRowId={(row) => row._id}
                 rows={filteredData}
                 columns={columns}
+                pageSizeOptions={[6]}
                 paginationModel={paginationModel}
                 onPaginationModelChange={setPaginationModel}
                 onSortModelChange={(newSortModel) => setSort(...newSortModel)}
