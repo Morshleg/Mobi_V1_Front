@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useRegisterMutation, useGetAllUsersQuery } from 'slices/usersApiSlice';
+import { useRegisterMutation, useGetAllUsersQuery } from 'api/usersApi';
 
 import { useDispatch } from 'react-redux';
 import { addUserToList } from 'slices/globalSlice';

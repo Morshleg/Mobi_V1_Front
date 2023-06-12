@@ -67,13 +67,14 @@ const ReportPDF = ({ data }) => {
     MotifRejetGarantie,
     Remarque,
     PanneDiagnostique,
+    updatedAt,
   } = data;
   return (
     <Document>
       <Page size='A4' style={styles.page}>
         {/*-------------------------------------HEADER------------------------------------------------*/}
         <View style={styles.containerHeader}>
-          <Text style={styles.title}>RAPPORT D’INTERVENTION N° {NumDoss}</Text>
+          <Text style={styles.title}>RAPPORT D’INTERVENTION N° {NumRI}</Text>
           <Text style={styles.title}>{Demandeur}</Text>
         </View>
 
@@ -86,12 +87,10 @@ const ReportPDF = ({ data }) => {
           ]}
         >
           <View style={{ width: '50%' }}>
-            <Text style={styles.infoLabel}>
-              Numéro de Dossier (n°facture): {NumRI}
-            </Text>
+            <Text style={styles.infoLabel}>Numéro de Dossier : {NumDoss}</Text>
           </View>
           <View>
-            <Text style={styles.infoLabel}>Date de clôture:</Text>
+            <Text style={styles.infoLabel}>Date de clôture: {updatedAt}</Text>
           </View>
         </View>
 
@@ -110,11 +109,13 @@ const ReportPDF = ({ data }) => {
 
           <View style={[styles.flex, { margin: '10 0 5 0' }]}>
             <View style={{ width: '50%' }}>
-              <Text style={styles.infoLabel}>N° imei facture :</Text>
+              <Text style={styles.infoLabel}>
+                N° série Réceptionné : {NumSerieRec}
+              </Text>
             </View>
             <View>
               <Text style={styles.infoLabel}>
-                N° imei receptionné : {NumSerieRec}
+                N° série Expédié : {NumSerieExp}
               </Text>
             </View>
           </View>
@@ -122,7 +123,10 @@ const ReportPDF = ({ data }) => {
             Accessoires réceptionnés : {Accessoires}
           </Text>
           <Text style={[styles.infoLabel, { marginTop: '10' }]}>
-            Description de la panne par le client : {PanneClient}
+            Panne déclarée par le client : {PanneClient}
+          </Text>
+          <Text style={[styles.infoLabel, { marginTop: '10' }]}>
+            Description de la panne : {PanneReparateur}
           </Text>
           <Text style={[styles.infoLabel, { marginTop: '10' }]}>
             Etat du produit à Réception : {EtatProduit}

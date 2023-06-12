@@ -24,6 +24,7 @@ const PrivateRoute = () => {
 
         // Videz le local storage
         localStorage.clear();
+        window.location.href = '/';
       } else {
         console.log('Authorized');
       }

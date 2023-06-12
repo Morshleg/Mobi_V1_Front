@@ -1,98 +1,107 @@
-import React, { useState } from "react";
-import { Box, Button, TextField, MenuItem, Modal, Typography } from "@mui/material";
-import { Formik } from "formik";
-import * as yup from "yup";
-import { useRegisterMutation } from "slices/usersApiSlice";
-
-import { useDispatch } from "react-redux";
-import { addUserToList } from "slices/globalSlice";
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  TextField,
+  MenuItem,
+  Modal,
+  Typography,
+} from '@mui/material';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import { useRegisterMutation } from 'api/usersApi';
+import { useDispatch } from 'react-redux';
+import { addUserToList } from 'slices/globalSlice';
 
 const registerSchema = yup.object().shape({
-  
-  FirstName: yup.string().required("required"),
-  LastName: yup.string().required("required"),
-  Pseudo: yup.string().required("required"),
-  Email: yup.string().email("invalid email").required("required"),
-  Password: yup.string().required("required"),
+  FirstName: yup.string().required('required'),
+  LastName: yup.string().required('required'),
+  Pseudo: yup.string().required('required'),
+  Email: yup.string().email('invalid email').required('required'),
+  Password: yup.string().required('required'),
   Role: yup
-  .string()
-  .required("Le rôle de l'utilisateur est requis")
-  .oneOf(["Lecteur", "Reparateur","Vendeur", "Empereur"], "Le rôle n'est pas valide'")
-  .default("Lecteur"),
+    .string()
+    .required("Le rôle de l'utilisateur est requis")
+    .oneOf(
+      ['Lecteur', 'Reparateur', 'Vendeur', 'Empereur'],
+      "Le rôle n'est pas valide'"
+    )
+    .default('Lecteur'),
 });
 
 const initialValuesRegister = {
-  FirstName: "",
-  LastName: "",
-  Pseudo: "",
-  Password: "",
-  Email: "",
-  Role: "Lecteur",
+  FirstName: '',
+  LastName: '',
+  Pseudo: '',
+  Password: '',
+  Email: '',
+  Role: 'Lecteur',
 };
 
 const RegisterPage = ({ onUserCreated }) => {
+  const dispatch = useDispatch();
 
-const dispatch = useDispatch();
-  
-const [addUser] = useRegisterMutation();
-const [showModal, setShowModal] = useState(false);
-const [successMessage, setSuccessMessage] = useState("");
-  
-/* LOGIQUE D'AJOUT de USERS */
-const handleFormSubmit = async (values, onSubmitProps) => {
-  try {
-  const response = await addUser(values);
+  const [addUser] = useRegisterMutation();
+  const [showModal, setShowModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const savedUser = response.data;
+  /* LOGIQUE D'AJOUT de USERS */
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    try {
+      const response = await addUser(values);
+
+      const savedUser = response.data;
       if (savedUser) {
         dispatch(addUserToList(savedUser));
         // modal Enregistrement réussi
-          setShowModal(true);
-          setSuccessMessage("L'enregistrement a réussi !");
-          setTimeout(() => {
-            setShowModal(false);
-            setSuccessMessage("");
-          }, 2000);
+        setShowModal(true);
+        setSuccessMessage("L'enregistrement a réussi !");
+        setTimeout(() => {
+          setShowModal(false);
+          setSuccessMessage('');
+        }, 2000);
 
         // Réinitialiser le formulaire après l'enregistrement de l'utilisateur
-          onSubmitProps.resetForm();
+        onSubmitProps.resetForm();
         // Appeler la fonction de rappel pour mettre à jour le tableau des utilisateurs dans Admin.jsx
-          onUserCreated();
+        onUserCreated();
       } else {
         // Enregistrement échoué
-          console.error("Erreur lors de l'enregistrement de l'utilisateur");
+        console.error("Erreur lors de l'enregistrement de l'utilisateur");
       }
     } catch (error) {}
   };
-  
 
   return (
-    <Box m="1.5rem 2.5rem" display="flex" flexDirection="column" alignItems="center">
-
-    <Modal open={showModal} onClose={() => setShowModal(false)} >
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          bgcolor: "grey",
-          borderRadius: "8px",
-          padding: "16px",
-          textAlign: "center",
-          animation: showModal ? "fadeOut 3s forwards" : "none",
-          
-        }}
-      >
-        <Typography variant="h6">{successMessage}</Typography>
-      </Box>
-    </Modal>
-    <Formik
-      initialValues={initialValuesRegister}
-      validationSchema={registerSchema}
-      onSubmit={handleFormSubmit}
+    <Box
+      m='1.5rem 2.5rem'
+      display='flex'
+      flexDirection='column'
+      alignItems='center'
     >
-          {({
+      <Modal open={showModal} onClose={() => setShowModal(false)}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'grey',
+            borderRadius: '8px',
+            padding: '16px',
+            textAlign: 'center',
+            animation: showModal ? 'fadeOut 3s forwards' : 'none',
+          }}
+        >
+          <Typography variant='h6'>{successMessage}</Typography>
+        </Box>
+      </Modal>
+      <Formik
+        initialValues={initialValuesRegister}
+        validationSchema={registerSchema}
+        onSubmit={handleFormSubmit}
+      >
+        {({
           values,
           errors,
           touched,
@@ -103,65 +112,65 @@ const handleFormSubmit = async (values, onSubmitProps) => {
         }) => (
           <form onSubmit={handleSubmit}>
             <TextField
-              label="Prénom"
+              label='Prénom'
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.FirstName}
               required
-              name="FirstName"
+              name='FirstName'
               error={Boolean(touched.FirstName) && Boolean(errors.FirstName)}
               helperText={touched.FirstName && errors.FirstName}
               sx={{ marginBottom: 2 }}
             />
             <TextField
-              label="Nom"
+              label='Nom'
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.LastName}
               required
-              name="LastName"
+              name='LastName'
               error={Boolean(touched.LastName) && Boolean(errors.LastName)}
               helperText={touched.LastName && errors.LastName}
               sx={{ marginBottom: 2 }}
             />
-             <TextField
-              label="Pseudo"
+            <TextField
+              label='Pseudo'
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.Pseudo}
               required
-              name="Pseudo"
+              name='Pseudo'
               error={Boolean(touched.Pseudo) && Boolean(errors.Pseudo)}
               helperText={touched.Pseudo && errors.Pseudo}
               sx={{ marginBottom: 2 }}
             />
             <TextField
-              label="Email"
+              label='Email'
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.Email}
               required
-              name="Email"
+              name='Email'
               error={Boolean(touched.Email) && Boolean(errors.Email)}
               helperText={touched.Email && errors.Email}
               sx={{ marginBottom: 2 }}
             />
-           <TextField
-              label="Password"
-              type="Password"
+            <TextField
+              label='Password'
+              type='Password'
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.Password}
               required
-              name="Password"
+              name='Password'
               error={Boolean(touched.Password) && Boolean(errors.Password)}
               helperText={touched.Password && errors.Password}
               sx={{ marginBottom: 2 }}
             />
             <TextField
               select
-              label="Role"
-              name="Role"
+              label='Role'
+              name='Role'
               required
               value={values.Role}
               onChange={handleChange}
@@ -170,16 +179,15 @@ const handleFormSubmit = async (values, onSubmitProps) => {
               helperText={touched.Role && errors.Role}
               sx={{ marginBottom: 2 }}
             >
-              <MenuItem value="Lecteur">Lecteur</MenuItem>
-              <MenuItem value="Reparateur">Reparateur</MenuItem>
-              <MenuItem value="Vendeur">Vendeur</MenuItem>
-              <MenuItem value="Empereur">Empereur</MenuItem>
-
+              <MenuItem value='Lecteur'>Lecteur</MenuItem>
+              <MenuItem value='Reparateur'>Reparateur</MenuItem>
+              <MenuItem value='Vendeur'>Vendeur</MenuItem>
+              <MenuItem value='Empereur'>Empereur</MenuItem>
             </TextField>
             <Box>
-            <Button type="submit" variant="contained" color="primary">
-              Ajouter
-            </Button>
+              <Button type='submit' variant='contained' color='primary'>
+                Ajouter
+              </Button>
             </Box>
           </form>
         )}

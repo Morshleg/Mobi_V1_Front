@@ -14,14 +14,13 @@ import {
   Box,
   Typography,
   IconButton,
-  
   Toolbar,
   Menu,
   MenuItem,
   useTheme,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from 'slices/usersApiSlice';
+import { useLogoutMutation } from 'api/usersApi';
 import { logout } from 'slices/globalSlice';
 import { useSelector } from 'react-redux';
 
@@ -60,7 +59,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         {/* LEFT SIDE */}
 
         <FlexBetween>
-          {/* Rajouter par emple un texte deroulant avec des news locales ici */}         
+          {/* Rajouter par emple un texte deroulant avec des news locales ici */}
         </FlexBetween>
 
         {/* RIGHT SIDE */}
@@ -84,7 +83,6 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 gap: '1rem',
               }}
             >
-             
               <Box textAlign='left'>
                 <Typography
                   fontWeight='bold'

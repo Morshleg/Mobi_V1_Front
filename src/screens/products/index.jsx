@@ -17,9 +17,9 @@ import ProductRegister from './productRegister';
 import Header from 'components/Header';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { useGetAllProductsQuery } from 'slices/productsApiSlice';
-// import { useUpdateProductMutation } from 'slices/productsApiSlice';
-import { useDeleteProductMutation } from 'slices/productsApiSlice';
+import { useGetAllProductsQuery } from 'api/productsApi';
+// import { useUpdateProductMutation } from 'slices/productsApi';
+import { useDeleteProductMutation } from 'api/productsApi';
 import axios from 'axios';
 import ConfirmationModal from 'components/ModalProductDelete';
 import { useSnackbar } from 'components/Snackbar';
@@ -66,8 +66,6 @@ const Products = ({
     sort: JSON.stringify(sort),
     search: searchInput,
   });
-
-  console.log(data);
 
   /*---------------------------------------------------------SEARCH ----------------------------------------*/
   /* SELECT SUR LE FIELD 'RAYON' */

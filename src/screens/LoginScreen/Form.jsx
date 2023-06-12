@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from 'slices/usersApiSlice';
+import { useLoginMutation } from 'api/usersApi';
 import { setCredentials } from 'slices/globalSlice';
 import * as yup from 'yup';
 import { Formik } from 'formik';

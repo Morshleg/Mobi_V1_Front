@@ -13,7 +13,7 @@ import {
   useDeleteUserMutation,
   useGetUserByIdMutation,
   useRegisterMutation,
-} from 'slices/usersApiSlice';
+} from 'api/usersApi';
 import { DataGrid, frFR } from '@mui/x-data-grid';
 import DataGridCustomToolbarAdmin from 'components/DataGridCustomToolbarAdmin';
 import EditIcon from '@mui/icons-material/Edit';
