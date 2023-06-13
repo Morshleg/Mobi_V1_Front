@@ -1,6 +1,13 @@
 import React from 'react';
 import { Search } from '@mui/icons-material';
-import { IconButton, TextField, InputAdornment, Box } from '@mui/material';
+import {
+  IconButton,
+  TextField,
+  InputAdornment,
+  Box,
+  useTheme,
+  Typography,
+} from '@mui/material';
 import {
   GridToolbarDensitySelector,
   GridToolbarContainer,
@@ -15,6 +22,7 @@ const DataGridCustomToolbar = ({
   setSearch,
   handleOpenModal,
 }) => {
+  const theme = useTheme();
   return (
     <GridToolbarContainer>
       <FlexBetween width='100%'>
@@ -30,7 +38,14 @@ const DataGridCustomToolbar = ({
             borderRadius='0.5rem'
             color='#979797'
           >
-            <h1 style={{ margin: 0 }}>Terminé</h1>
+            <Typography
+              variant='h3'
+              color={theme.palette.secondary[100]}
+              fontWeight='bold'
+              marginRight={2}
+            >
+              Terminé
+            </Typography>
             <DoneOutlineIcon color='success' />
           </Box>
         </FlexBetween>
