@@ -5,8 +5,8 @@ const ConfirmationModal = ({
   open,
   onClose,
   onConfirm,
-  productToDelete,
-  productName,
+  userToDelete,
+  userPseudo,
 }) => {
   return (
     <Modal open={open} onClose={onClose}>
@@ -26,7 +26,7 @@ const ConfirmationModal = ({
           Confirmation de suppression
         </Typography>
         <Typography variant='body1'>
-          Êtes-vous sûr de vouloir supprimer {productName} ?
+          Êtes-vous sûr de vouloir supprimer {userPseudo} ?
         </Typography>
         <Box display='flex' justifyContent='flex-end' marginTop='1rem'>
           <Button variant='outlined' color='secondary' onClick={onClose}>
@@ -35,7 +35,7 @@ const ConfirmationModal = ({
           <Button
             variant='contained'
             color='primary'
-            onClick={() => onConfirm(productToDelete)}
+            onClick={() => onConfirm(userToDelete)}
             style={{ marginLeft: '1rem' }}
           >
             Confirmer

@@ -27,6 +27,7 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import InfoIcon from '@mui/icons-material/Info';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import ConfirmationModal from 'components/ModalUserDelete';
 import { useSnackbar } from 'components/Snackbar';
 
 const registerSchema = yup.object().shape({
@@ -79,6 +80,8 @@ const Admin = () => {
   const [deleteUser] = useDeleteUserMutation();
   const [addUser] = useRegisterMutation();
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -193,31 +196,24 @@ const Admin = () => {
   };
 
   /* ------------------------------------ USER DELETE -------------------------------------------------*/
-  const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
-    useState(false);
 
-  const deleteConfirmationOpenModal = () => {
-    setDeleteConfirmationModalOpen(true);
-  };
-
-  const deleteConfirmationCloseModal = () => {
-    setDeleteConfirmationModalOpen(false);
-  };
-
-  const handleDelete = (user) => {
-    setSelectedUser(user);
-    deleteConfirmationOpenModal();
+  const handleDeleteConfirmation = (user) => {
+    setUserToDelete(user);
+    setShowConfirmationModal(true);
   };
 
   const handleDeleteUser = async (user) => {
     try {
-      await deleteUser(user._id);
-      deleteConfirmationCloseModal();
+      const userId = userToDelete._id;
+      await deleteUser(userId);
       refetch();
       showSnackbar('Utilisateur supprimé');
     } catch (error) {
       console.error("Erreur lors de la suppression de l'utilisateur :", error);
       showSnackbar("Erreur lors de la suppression de l'utilisateur");
+    } finally {
+      setShowConfirmationModal(false); // Fermer la modal de confirmation
+      setUserToDelete(null);
     }
   };
 
@@ -263,7 +259,7 @@ const Admin = () => {
           <DeleteForeverOutlinedIcon
             color='error'
             fontSize='large'
-            onClick={handleDelete}
+            onClick={() => handleDeleteConfirmation(params.row)}
             style={{ cursor: 'pointer', marginRight: '2rem' }}
           />
 
@@ -273,21 +269,6 @@ const Admin = () => {
             onClick={() => handleInfo(params.row)}
             style={{ cursor: 'pointer', marginRight: '2rem' }}
           />
-          {deleteConfirmationModalOpen && (
-            <div>
-              <DoneIcon
-                color='success'
-                onClick={() => handleDeleteUser(params.row)}
-                style={{ cursor: 'pointer', marginLeft: '0.5rem' }}
-              />
-
-              <ClearIcon
-                color='error'
-                onClick={deleteConfirmationCloseModal}
-                style={{ cursor: 'pointer', marginLeft: '0.5rem' }}
-              />
-            </div>
-          )}
         </div>
       ),
     },
@@ -623,6 +604,15 @@ const Admin = () => {
             )}
           </Formik>
         </Box>
+
+        <ConfirmationModal
+          open={showConfirmationModal}
+          onClose={() => setShowConfirmationModal(false)}
+          onConfirm={handleDeleteUser}
+          userToDelete={userToDelete}
+          userPseudo={userToDelete ? userToDelete.Pseudo : 'cet utilisateur'}
+        />
+
         <Snackbar
           open={snackbarOpen}
           autoHideDuration={5000}
