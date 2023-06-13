@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import 'index.css';
 import {
+  Alert,
   Box,
   Button,
   TextField,
   MenuItem,
   Grid,
   useTheme,
+  Snackbar,
 } from '@mui/material';
 import {
   useGetAllUsersQuery,
@@ -25,6 +27,7 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import InfoIcon from '@mui/icons-material/Info';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useSnackbar } from 'components/Snackbar';
 
 const registerSchema = yup.object().shape({
   FirstName: yup.string().required('required'),
@@ -53,6 +56,13 @@ const initialValuesRegister = {
 
 const Admin = () => {
   const theme = useTheme();
+  const {
+    snackbarOpen,
+    snackbarMessage,
+    snackbarSeverity,
+    handleSnackbarClose,
+    showSnackbar,
+  } = useSnackbar();
   const [sort, setSort] = useState({});
   const [filteredData, setData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
@@ -82,13 +92,6 @@ const Admin = () => {
   }, [data, searchInput, setData, selectedUser, setSelectedUser]);
 
   /* ------------------------------------ USER CREATE-------------------------------------------------*/
-  const [RegisterModalOpen, setRegisterModalOpen] = useState(false);
-  const [RegistermodalText, setRegisterModalText] = useState('');
-
-  const openRegisterModal = (text) => {
-    setRegisterModalText(text);
-    setRegisterModalOpen(true);
-  };
 
   const handleFormSubmit = async (formData, onSubmitProps) => {
     try {
@@ -96,10 +99,11 @@ const Admin = () => {
       const savedUser = response.data;
       if (savedUser) {
         onSubmitProps.resetForm();
-        openRegisterModal('Utilisateur correctement enregistré');
+        showSnackbar('Enregistrement réussi');
         refetch();
       } else {
         console.error("Erreur lors de l'enregistrement de l'utilisateur");
+        showSnackbar("Erreur lors de l'enregistrement");
       }
     } catch (error) {}
   };
@@ -113,14 +117,7 @@ const Admin = () => {
   const [Email, setNewEmail] = useState('');
   const [Role, setNewRole] = useState('');
 
-  const [UpdateModalOpen, setUpdateModalOpen] = useState(false);
-  const [UpdatemodalText, setUpdateModalText] = useState('');
   const [updateSuccess, setUpdateSuccess] = useState(false);
-
-  const openModal = (text) => {
-    setUpdateModalText(text);
-    setUpdateModalOpen(true);
-  };
 
   const handleEditField = () => {
     setEditMode(true);
@@ -157,13 +154,14 @@ const Admin = () => {
         if (!response.ok) {
           throw new Error('Failed to update user.');
         }
-        openModal('Utilisateur correctement modifié');
+        showSnackbar('Utilisateur correctement modifié');
         refetch();
         setData(filteredData || []);
         setEditMode(false);
         setUpdateSuccess(true);
       } catch (error) {
         console.error(error);
+        showSnackbar('Erreur lors de lamodification');
       }
     }
   };
@@ -187,6 +185,9 @@ const Admin = () => {
       console.error(
         "Erreur lors de la récupération des informations de l'utilisateur :",
         error
+      );
+      showSnackbar(
+        "Erreur lors de la récupération des informations de l'utilisateur "
       );
     }
   };
@@ -213,8 +214,10 @@ const Admin = () => {
       await deleteUser(user._id);
       deleteConfirmationCloseModal();
       refetch();
+      showSnackbar('Utilisateur supprimé');
     } catch (error) {
       console.error("Erreur lors de la suppression de l'utilisateur :", error);
+      showSnackbar("Erreur lors de la suppression de l'utilisateur");
     }
   };
 
@@ -484,14 +487,6 @@ const Admin = () => {
                     onClick={handleEditField}
                     style={{ cursor: 'pointer', marginLeft: '0.5rem' }}
                   />
-                  {UpdateModalOpen && (
-                    <div
-                      style={{ fontWeight: 'normal', color: '#66bb6a' }}
-                      className='updateFade-out'
-                    >
-                      {UpdatemodalText}
-                    </div>
-                  )}
                 </>
               )}
             </Box>
@@ -622,20 +617,22 @@ const Admin = () => {
                     <Button type='submit' variant='contained' color='primary'>
                       Ajouter
                     </Button>
-                    {RegisterModalOpen && (
-                      <div
-                        style={{ fontWeight: 'normal', color: '#66bb6a' }}
-                        className='fade-out'
-                      >
-                        {RegistermodalText}
-                      </div>
-                    )}
                   </Grid>
                 </Grid>
               </form>
             )}
           </Formik>
         </Box>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={5000}
+          onClose={handleSnackbarClose}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
       </Box>
 
       {/* ------------------------------------ ARRAY BOX -------------------------------------------------*/}
