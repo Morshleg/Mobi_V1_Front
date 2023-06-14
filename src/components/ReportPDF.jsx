@@ -1,5 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import moment from 'moment';
 
 // Styles
 const styles = StyleSheet.create({
@@ -90,7 +91,9 @@ const ReportPDF = ({ data }) => {
             <Text style={styles.infoLabel}>Numéro de Dossier : {NumDoss}</Text>
           </View>
           <View>
-            <Text style={styles.infoLabel}>Date de clôture: {updatedAt}</Text>
+            <Text style={styles.infoLabel}>
+              Date de clôture: {moment(updatedAt).format('DD/MM/YYYY')}
+            </Text>
           </View>
         </View>
 
