@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     textAlign: 'center',
-    padding: 10, // Ajout du padding pour l'espace intérieur du border
+    padding: 10,
   },
   containerInfo: {
     width: '90%',
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 20,
     textAlign: 'start',
-    padding: 10, // Ajout du padding pour l'espace intérieur du border
+    padding: 10,
   },
   title: {
     fontSize: 14,

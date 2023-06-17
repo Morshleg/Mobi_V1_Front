@@ -31,11 +31,11 @@ import ConfirmationModal from 'components/ModalUserDelete';
 import { useSnackbar } from 'components/Snackbar';
 
 const registerSchema = yup.object().shape({
-  FirstName: yup.string().required('required'),
-  LastName: yup.string().required('required'),
-  Pseudo: yup.string().required('required'),
-  Email: yup.string().email('invalid email').required('required'),
-  Password: yup.string().required('required'),
+  FirstName: yup.string().required('Champ requis'),
+  LastName: yup.string().required('Champ requis'),
+  Pseudo: yup.string().required('Champ requis'),
+  Email: yup.string().email('Email invalide').required('Champ requis'),
+  Password: yup.string().required('Champ requis'),
   Role: yup
     .string()
     .required("Le rôle de l'utilisateur est requis")
@@ -127,7 +127,6 @@ const Admin = () => {
   };
 
   const isValidEmail = (email) => {
-    // Expression régulière pour vérifier le format de l'e-mail
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -212,7 +211,7 @@ const Admin = () => {
       console.error("Erreur lors de la suppression de l'utilisateur :", error);
       showSnackbar("Erreur lors de la suppression de l'utilisateur");
     } finally {
-      setShowConfirmationModal(false); // Fermer la modal de confirmation
+      setShowConfirmationModal(false);
       setUserToDelete(null);
     }
   };

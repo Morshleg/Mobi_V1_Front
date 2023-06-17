@@ -18,7 +18,6 @@ import Header from 'components/Header';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { useGetAllProductsQuery } from 'api/productsApi';
-// import { useUpdateProductMutation } from 'slices/productsApi';
 import { useDeleteProductMutation } from 'api/productsApi';
 import axios from 'axios';
 import ConfirmationModal from 'components/ModalProductDelete';
@@ -188,14 +187,14 @@ const Products = ({
       const productId = productToDelete._id;
       await deleteProduct(productId).unwrap();
       console.log('Produit supprimé avec succès !');
-      filterDeletedProduct(productId); // Filtrer le produit supprimé du tableau
+      filterDeletedProduct(productId);
       showSnackbar('Produit supprimé avec succès', 'success');
       refetch();
     } catch (error) {
       console.error('Erreur lors de la suppression du produit :', error);
       showSnackbar('Erreur lors de la suppression du produit', 'error');
     } finally {
-      setShowConfirmationModal(false); // Fermer la modal de confirmation
+      setShowConfirmationModal(false);
       setProductToDelete(null);
     }
   };

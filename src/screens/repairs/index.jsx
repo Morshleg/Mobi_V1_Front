@@ -405,6 +405,7 @@ const Transactions = () => {
             style={{ cursor: "pointer", marginRight: "0.5rem" }}
           /> */}
           {/* <ModeEditIcon style={{ cursor: "pointer", marginRight: "0.5rem" }} /> */}
+
           <PDFDownloadLink
             document={<ReportPDF data={params.row} />}
             fileName='Rapport.pdf'
